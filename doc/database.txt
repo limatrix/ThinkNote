@@ -1,0 +1,55 @@
+article - 文章，博客
+id,
+userid,
+title,
+timestamp,
+timespend
+
+section - 章节
+id,
+userid,
+articleid,
+sequence, -- 章节间要保证顺序
+title, --章节title
+content, -- 实际内容
+
+articleref - 整片文章相关的参考
+id,
+userid,
+articleid,
+href, - 链接地址
+title, - 链接对应的title
+content, - 实际内容
+
+sectionref - 章节相关的参考
+id,
+userid,
+articleid,
+href,
+title,
+content
+
+keywords ---
+id,
+userid,
+keyword
+
+keyarticleref --- 文章相关的
+id，
+userid,
+articleid,
+keywordid,
+
+keynoteref - 用户自己记录的
+id,
+userid,
+keywordid,
+content
+
+noref - 游离的,没有对应关键字的，全局的
+id,
+userid,
+content,
+
+
+
