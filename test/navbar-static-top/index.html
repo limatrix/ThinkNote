@@ -25,7 +25,7 @@
 	  /*.contentHolder { 
 	    position:relative; overflow: auto;
 	  }*/
-.contentHolder { position:relative; overflow: auto; }
+.contentHolder { position:relative; overflow: auto; width:100%;}
 	  p {
 	  	font-size: 16px;
     line-height: 1.65;
@@ -58,7 +58,7 @@
   <body>
 
     <!-- Static navbar -->
-    <nav class="navbar navbar-default navbar-static-top">
+<!--     <nav class="navbar navbar-default navbar-static-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -92,9 +92,9 @@
             <li class="active"><a href="./">Static top <span class="sr-only">(current)</span></a></li>
             <li><a href="../navbar-fixed-top/">Fixed top</a></li>
           </ul>
-        </div><!--/.nav-collapse -->
+        </div>
       </div>
-    </nav>
+    </nav> -->
 
 
 <div class="container">
@@ -113,24 +113,38 @@
 	</div>
 
   <!-- <div style=" overflow:scroll; width:400px; height:400px;”></div>col-md-3 -->
+  <!-- 滚动条:需要样式contentHolder, 需要固定高度$('#content').height(winHeight - offset - 100);-->
 
   <div class="row clearfix">
-    <div id="Demo" class="contentHolder col-md-3">
-      <div id="content">
-	      
-	      <!-- <form role="form">
-				<div class="form-group">
-					 <input class="form-control" id="articleTitle" type="text" placeholder="在此输入段落标题" />
-				</div>
-		  </form> -->
+    <div id="Demo" class="col-md-3">
+      <div id="content" class="contentHolder"> 
 
-		  <p seq="1" contentEditable="true">点此添加标题<a class="glyphicon glyphicon-remove" role="menuitem"></a></p>
-		  <p seq="2" contentEditable="true">点此添加标题</p>
+  		  <p seq="1" contentEditable="true">点此添加标题</p>
+  		  <p seq="2" contentEditable="true">点此添加标题</p>
 
-		  <p seq="3" contentEditable="true">点此添加标题</p>
+  		  <p seq="3" contentEditable="true">点此添加标题</p>
+        <p seq="1" contentEditable="true">点此添加标题</p>
+        <p seq="2" contentEditable="true">点此添加标题</p>
 
-	      
+        <p seq="3" contentEditable="true">点此添加标题</p>
+        <p seq="1" contentEditable="true">点此添加标题</p>
+        <p seq="2" contentEditable="true">点此添加标题</p>
+
+        <p seq="3" contentEditable="true">点此添加标题</p>
+        <p seq="1" contentEditable="true">点此添加标题</p>
+        <p seq="2" contentEditable="true">点此添加标题</p>
+
+        <p seq="3" contentEditable="true">点此添加标题</p>
+        <p seq="1" contentEditable="true">点此添加标题</p>
+        <p seq="2" contentEditable="true">点此添加标题</p>
+
+        <p seq="3" contentEditable="true">点此添加标题</p>
       </div>
+
+      <div>
+        <button>ajajaj</button>
+      </div>
+      
     </div>
     <div id="col-content-right" class="col-md-9">
       xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />
@@ -140,7 +154,11 @@
 
 <!-- /container -->
 
-
+<!-- <form role="form">
+<div class="form-group">
+<input class="form-control" id="articleTitle" type="text" placeholder="在此输入段落标题" />
+</div>
+</form> -->
 
     
   </body>
@@ -150,8 +168,8 @@ $(document).ready(function() {
 
 // 控件高度设置
 	var winHeight = $(window).height(); //浏览器当前窗口可视区域高度
-	var offset = $("#Demo").offset().top;
-	$('#Demo').height(winHeight - offset);
+	var offset = $("#content").offset().top;
+	$('#content').height(winHeight - offset - 100);
 
 	// <p>的Onclick事件，如果是"点此添加标题"才清空
 	$("#content").on("click","p", function(){
@@ -165,7 +183,7 @@ $(document).ready(function() {
 	  if (count == seq) {
 	  	var nextSeq = seq + 1;
 	  	$("#content").append("<p seq=\""+nextSeq+"\" contentEditable=\"true\">点此添加标题</p>");
-	  	$('#Demo').perfectScrollbar("update"); 
+	  	$('#content').perfectScrollbar("update"); 
 	  }
 	});
 
@@ -176,11 +194,8 @@ $(document).ready(function() {
 	  }
 	});
 
-	
-
-
 	//滚动条
-	$('#Demo').perfectScrollbar(); 
+	$('#content').perfectScrollbar(); 
 }); 
 
 
