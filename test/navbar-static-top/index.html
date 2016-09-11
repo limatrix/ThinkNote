@@ -25,11 +25,14 @@
 	  /*.contentHolder { 
 	    position:relative; overflow: auto;
 	  }*/
+.container {
+	width: 98%;
+}
 .contentHolder { position:relative; overflow: auto; width:100%;}
 	  p {
 	  	font-size: 16px;
     line-height: 1.65;
-    margin: 1em 0em 1em 0em;
+    margin: 1em 1em 1em 0em;
     display: block;
     padding: 0.4em 0em 0.4em 0.2em;
 /*    -webkit-margin-before: 1em;
@@ -118,11 +121,10 @@
   <div class="row clearfix">
     <div id="Demo" class="col-md-3">
       <div id="content" class="contentHolder"> 
+  		<p seq="1" contentEditable="true">点此添加标题</p>
+  		<p seq="2" contentEditable="true">点此添加标题</p>
 
-  		  <p seq="1" contentEditable="true">点此添加标题</p>
-  		  <p seq="2" contentEditable="true">点此添加标题</p>
-
-  		  <p seq="3" contentEditable="true">点此添加标题</p>
+  		<p seq="3" contentEditable="true">点此添加标题</p>
         <p seq="1" contentEditable="true">点此添加标题</p>
         <p seq="2" contentEditable="true">点此添加标题</p>
 
@@ -140,10 +142,10 @@
 
         <p seq="3" contentEditable="true">点此添加标题</p>
       </div>
-
-      <div>
-        <button>ajajaj</button>
-      </div>
+      <div id="titleOpt" style="display:table; width:auto; margin-left:auto; margin-right:auto">
+		  	<button class="btn btn-primary">编辑</button>
+		  	<button class="btn btn-primary">排序</button>
+	  </div>
       
     </div>
     <div id="col-content-right" class="col-md-9">
@@ -169,7 +171,7 @@ $(document).ready(function() {
 // 控件高度设置
 	var winHeight = $(window).height(); //浏览器当前窗口可视区域高度
 	var offset = $("#content").offset().top;
-	$('#content').height(winHeight - offset - 100);
+	$('#content').height(winHeight - offset - 80);
 
 	// <p>的Onclick事件，如果是"点此添加标题"才清空
 	$("#content").on("click","p", function(){
