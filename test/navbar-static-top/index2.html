@@ -28,7 +28,7 @@
 .container {
 	width: 98%;
 }
-.contentHolder { position:relative; overflow: auto; width:100%;}
+  .contentHolder { position:relative; overflow:auto; width:100%;}
 
 	  p {
 	  	font-size: 16px;
@@ -55,17 +55,12 @@
 
 	</style>
 	<style>
-      /* to make scrollbars always visible */
-      .always-visible.ps-container > .ps-scrollbar-x-rail,
-      .always-visible.ps-container > .ps-scrollbar-y-rail {
-        opacity: 0.6;
-        
-      }
+
     </style>
   </head>
 
   <body>
-
+    <!-- $(".chatList").scrollTop($(".chatList")[0].scrollHeight); -->
     <!-- Static navbar -->
 <!--     <nav class="navbar navbar-default navbar-static-top">
       <div class="container">
@@ -124,12 +119,12 @@
   <!-- 问题记录 -->
   <!-- 滚动条: 需要样式contentHolder, 需要固定高度$('#content').height(winHeight - offset - 100);-->
   <!-- bootstrap居中: style="display:table; width:auto; margin-left:auto; margin-right:auto"  -->
-  <!-- 默认显示滚动条：always-visible -->
+  <!-- perfect 默认显示滚动条：always-visible -->
   <!-- 监听resize：$(window).resize(function() {});  -->
-
+  <!-- 隐藏滚动条：overflow:hidden -->
   <div class="row clearfix">
     <div id="Demo" class="col-md-3">
-      <div id="content" class="contentHolder always-visible"> 
+      <div id="content" class="contentHolder"> 
   		  
         <p seq="1" contentEditable="true">点此添加标题</p>
         <p seq="2" contentEditable="true">点此添加标题</p>
@@ -139,13 +134,13 @@
         <p seq="6" contentEditable="true">点此添加标题</p>
         <button class="btn btn-primary center" onclick="addTitle(this)">添加标题</button>
         
-      </div>
+      <!-- </div> -->
 
-      <div id="titleOpt" class="center">
+      <!-- <div id="titleOpt" class="center"> -->
 		  	<button class="btn btn-primary">编辑</button>
         &nbsp;&nbsp;&nbsp;&nbsp;
 		  	<button class="btn btn-primary">排序</button>
-	  </div>
+	     </div>
       
     </div>
     <div id="col-content-right" class="col-md-9">
@@ -165,13 +160,17 @@
     
   </body>
 <script type="text/javascript">
+var g_winHeight = 0;
 
 $(document).ready(function() {
 
 // 控件高度设置
 	var winHeight = $(window).height(); //浏览器当前窗口可视区域高度
 	var offset = $("#content").offset().top;
-	$('#content').height(winHeight - offset - 80);
+  g_winHeight = winHeight;
+	$('#content').height(winHeight - offset);
+  //$('#Demo').height(winHeight - offset -100);
+  //$('#content').attr('min-height', winHeight - offset - 30 + 'px');
 
 	// <p>的Onclick事件，如果是"点此添加标题"才清空
 	$("#content").on("click","p", function(){
@@ -209,6 +208,17 @@ $(document).ready(function() {
     //$("#content").append("<p seq=\""+nextSeq+"\" contentEditable=\"true\">点此添加标题</p>");
     $("<p seq=\""+nextSeq+"\" contentEditable=\"true\">点此添加标题</p>").insertBefore($(obj));
     $('#content').perfectScrollbar("update"); 
+    // var offset = $(obj).offset().top;
+    // if(g_winHeight - offset < 150) {
+    //   alert('aaa');
+    // }
+    var divHeight = $("#content").height();
+    if($('#content').prop("scrollHeight") > divHeight) {
+      $('#content').scrollTop($('#content').prop("scrollHeight") - divHeight + 100);
+      $('#content').perfectScrollbar("update"); 
+    }  
+    //alert('divHeight: '+divHeight);
+    //alert('scrollTop:'+$('#content').scrollTop()+'scrollHeight:'+$('#content').prop("scrollHeight"));
   }
 
 </script>
