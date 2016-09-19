@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>editor</title>
+  <link rel="stylesheet" type="text/css" href="dist/css/wangEditor.min.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+
+</head>
+<body>
+
+
+ <div style="width:80%"> <!-- 通过父容器的宽度来限制 -->
+    <!--用当前元素来控制高度-->
+    <div id="div1" style="height:400px;">
+        <p>请输入内容...</p>
+    </div>
+</div>
+
+
+</body>
+
+<!-- <script type="text/javascript" src="dist/js/lib/jquery-1.10.2.min.js"></script> -->
+<script type="text/javascript" src="dist/js/wangEditor.min.js"></script>
+<!--这里引用jquery和wangEditor.js-->
+<script type="text/javascript">
+    var editor = new wangEditor('div1');
+    editor.create();
+</script>
+</html>

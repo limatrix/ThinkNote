@@ -12,6 +12,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../bootstrap-3.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="dist/css/wangEditor.min.css">
     <!-- <script src="../bootstrap-3.3.5/dist/js/bootstrap.min.js"></script> -->
 
     <!-- Custom styles for this template -->
@@ -31,8 +32,8 @@
   .contentHolder { position:relative; overflow:auto; width:100%;}
 
 	  p {
-	  	font-size: 16px;
-    line-height: 1.65;
+	  	font-size: 14px;
+    line-height: 1.2;
     margin: 1em 1em 1em 0em;
     display: block;
     padding: 0.4em 0em 0.4em 0.2em;
@@ -46,8 +47,15 @@
 /*  		border-right-width:15px;
   		border-right-style:solid;
   		border-right-color:#aaa;*/
-  		border-right:3px solid #aaa; 
+  		border-right:1px solid #aaa; 
 	  }
+
+    .article-border {
+/*      border-right-width:15px;
+      border-right-style:solid;
+      border-right-color:#aaa;*/
+      border-bottom:1px solid #aaa; 
+    }
 
     .center {
       display:table; width:auto; margin-left:auto; margin-right:auto;
@@ -62,7 +70,7 @@
   <body>
     <!-- $(".chatList").scrollTop($(".chatList")[0].scrollHeight); -->
     <!-- Static navbar -->
-<!--     <nav class="navbar navbar-default navbar-static-top">
+    <!-- <nav class="navbar navbar-default navbar-static-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -103,19 +111,16 @@
 
 <div class="container">
   <!-- 标题 -->
-	<div class="row clearfix">
+	<!-- <div class="row clearfix">
 		<div class="col-md-12">
-			<form role="form">
-				<div class="form-group">
-					 <input class="form-control" id="articleTitle" type="text"/>
-				</div>
-			</form>
+			
+      <p contentEditable="true" class="article-border">点此添加标题</p>
       <div>
         关键字
       </div>
 		</div>
 	</div>
-
+ -->
   <!-- 问题记录 -->
   <!-- 滚动条: 需要样式contentHolder, 需要固定高度$('#content').height(winHeight - offset - 100);-->
   <!-- bootstrap居中: style="display:table; width:auto; margin-left:auto; margin-right:auto"  -->
@@ -123,28 +128,48 @@
   <!-- 监听resize：$(window).resize(function() {});  -->
   <!-- 隐藏滚动条：overflow:hidden -->
   <div class="row clearfix">
-    <div id="Demo" class="col-md-3">
-      <div id="content" class="contentHolder"> 
+    <div id="Demo" class="col-md-3 title-border">
+      <div id="content" class="contentHolder" style="padding-top:30px;"> 
   		  
-        <p seq="1" contentEditable="true">点此添加标题</p>
-        <p seq="2" contentEditable="true">点此添加标题</p>
-        <p seq="3" contentEditable="true">点此添加标题</p>
-        <p seq="4" contentEditable="true">点此添加标题</p>
-        <p seq="5" contentEditable="true">点此添加标题</p>
-        <p seq="6" contentEditable="true">点此添加标题</p>
-        <button class="btn btn-primary center" onclick="addTitle(this)">添加标题</button>
+        <!-- <p seq="1" onclick="openSection(id)">点此添加标题</p>
+        <p seq="2" onclick="openSection(id)">点此添加标题</p>
+        <p seq="3" onclick="openSection(id)">点此添加标题</p>
+        <p seq="4" onclick="openSection(id)">点此添加标题</p>
+        <p seq="5" onclick="openSection(id)">点此添加标题</p>
+        <p seq="6" onclick="openSection(id)">点此添加标题</p> -->
         
-      <!-- </div> -->
+        <!-- <p seq="6" contentEditable="true">点此添加标题</p> -->
+        <!-- <button class="btn btn-primary center" onclick="addTitle(this)">添加标题</button> -->
 
-      <!-- <div id="titleOpt" class="center"> -->
-		  	<button class="btn btn-primary">编辑</button>
+        <p><a seq="1" href="javascript:openSection();">一一一一一一一一一</a></p>
+        <p><a seq="2" href="javascript:openSection();">二二二二二二二二二</a></p>
+        <p><a seq="3" href="javascript:openSection();">三三三三三三三三三</a></p>
+        <p><a seq="4" href="javascript:openSection();">四四四四四四四四四</a></p>
+        <p><a seq="5" href="javascript:openSection();">五五五五五五五五五</a></p>
+        <p><a seq="6" href="javascript:openSection(this);">六六六六六六六六六</a></p>
+        <p><a seq="7" href="javascript:openSection(this);">七七七七七七七七七</a></p>
+        <p><a seq="8" href="javascript:openSection(this);">八八八八八八八八八</a></p>
+
+        
+      </div>
+
+      <div id="titleOpt" class="center" style="padding-top:20px;">
+		  	<button class="btn btn-primary" onclick="editTitle();">编辑</button>
         &nbsp;&nbsp;&nbsp;&nbsp;
 		  	<button class="btn btn-primary">排序</button>
 	     </div>
       
     </div>
     <div id="col-content-right" class="col-md-9">
-      xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />
+      <p contentEditable="true">如何写一篇文章</p>
+      <p id="currentSectionTitle"></p>
+     <!-- 编辑器 -->
+     <div style="width:100%">
+        <div id="div1" style="height:600px;">
+            <p>请输入内容...</p>
+        </div>
+     </div>
+     <!-- 编辑器 -->
     </div>
   </div>
 </div>
@@ -159,6 +184,14 @@
 
     
   </body>
+<script type="text/javascript" src="dist/js/wangEditor.min.js"></script>
+<!--这里引用jquery和wangEditor.js-->
+<script type="text/javascript">
+    var editor = new wangEditor('div1');
+    editor.create();
+    
+</script>
+
 <script type="text/javascript">
 var g_winHeight = 0;
 
@@ -168,24 +201,9 @@ $(document).ready(function() {
 	var winHeight = $(window).height(); //浏览器当前窗口可视区域高度
 	var offset = $("#content").offset().top;
   g_winHeight = winHeight;
-	$('#content').height(winHeight - offset);
-  //$('#Demo').height(winHeight - offset -100);
+	$('#content').height(winHeight - offset - 100);
+  $('#Demo').height(winHeight - offset);
   //$('#content').attr('min-height', winHeight - offset - 30 + 'px');
-
-	// <p>的Onclick事件，如果是"点此添加标题"才清空
-	$("#content").on("click","p", function(){
-	  //alert($(this).attr("seq"));
-	  if($(this).text() == "点此添加标题") {
-	  	$(this).text("");
-	  }
-	});
-
-	// 失去焦点
-	$("#content").on("blur","p", function(){
-	  if($(this).text() == "") {
-	  	$(this).text("点此添加标题");
-	  }
-	});
 
 	//滚动条
 	$('#content').perfectScrollbar(); 
@@ -197,28 +215,97 @@ $(document).ready(function() {
   $(window).resize(function() {
     var winHeight = $(window).height(); //浏览器当前窗口可视区域高度
     var offset = $("#content").offset().top;
-    $('#content').height(winHeight - offset - 80);
+    $('#content').height(winHeight - offset - 100);
     $('#content').perfectScrollbar("update"); 
   });
 
   // 需计算seq值
-  function addTitle(obj) {
-    var count = $("#content p").length;
-    var nextSeq = count + 1;
-    //$("#content").append("<p seq=\""+nextSeq+"\" contentEditable=\"true\">点此添加标题</p>");
-    $("<p seq=\""+nextSeq+"\" contentEditable=\"true\">点此添加标题</p>").insertBefore($(obj));
+  function addTitle(nextSeq) {
+    $("#content").append("<p seq=\""+nextSeq+"\" contentEditable=\"true\">点此添加标题</p>");
     $('#content').perfectScrollbar("update"); 
-    // var offset = $(obj).offset().top;
-    // if(g_winHeight - offset < 150) {
-    //   alert('aaa');
-    // }
+    
+    //将滚动条移动到最下面
     var divHeight = $("#content").height();
     if($('#content').prop("scrollHeight") > divHeight) {
       $('#content').scrollTop($('#content').prop("scrollHeight") - divHeight + 100);
       $('#content').perfectScrollbar("update"); 
     }  
-    //alert('divHeight: '+divHeight);
-    //alert('scrollTop:'+$('#content').scrollTop()+'scrollHeight:'+$('#content').prop("scrollHeight"));
+  }
+
+  function addEvent() {
+    
+      $("#content").on("click","p", function(){
+          // 清空预留字
+          if($(this).text() == "点此添加标题") {
+              $(this).text("");
+          }
+          // 如果点击的是最后一个，新增
+          var pLen = $("#content p").length;
+          var seq  = $(this).attr("seq");
+          //alert('length ' + pLen + " seq " + seq);
+          if(pLen == seq) {
+            addTitle(parseInt(seq) + 1);
+          }
+
+    });
+
+    // 失去焦点
+    $("#content").on("blur","p", function(){
+      // 如果什么也没写，就恢复默认
+      if($(this).text() == "") {
+        $(this).text("点此添加标题");
+        return;
+      }
+
+      
+    });
+  }
+
+    function saveHrefTitle() {
+      var arr = [];
+      $("#content a").each(function(){
+        var seq = $(this).attr("seq");
+        var text = $(this).text();
+        arr.push("<p seq=\""+seq+"\" contentEditable=\"true\">"+text+"</p>");
+      });
+      console.log(arr);
+      return arr;
+    }
+    function clearHrefTitle() {
+
+      $("#content").empty(); //删除子元素 remove()连这个元素都删
+    }
+    function displayEditTitle(arr) {
+      arr.forEach(function(p){
+          $("#content").append(p);
+        });
+    }
+    function hideEditAndSort() {
+
+      $("#titleOpt").empty();
+    }
+    function displaySave(){
+
+      $("#titleOpt").append('<button class="btn btn-primary" onclick="saveTitle();">保存</button>');
+    }
+    function editTitle() {
+        // 保存Href所有信息
+        var arr = saveHrefTitle();
+        // 清空
+        clearHrefTitle();
+        // 重新加载
+        displayEditTitle(arr);
+        // 添加事件
+        addEvent();
+        // 隐藏 编辑/排序
+        hideEditAndSort();
+        // 显示保存
+        displaySave();
+    }
+
+  function openSection(obj) {
+    console.log($(this));
+    $("#currentSectionTitle").text($(this).text());
   }
 
 </script>
