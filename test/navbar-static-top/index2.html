@@ -14,7 +14,7 @@
     <link href="../bootstrap-3.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="dist/css/wangEditor.min.css">
     <!-- <script src="../bootstrap-3.3.5/dist/js/bootstrap.min.js"></script> -->
-
+    <link rel="stylesheet" href="http://cdn.jsdelivr.net/editor/0.1.0/editor.css">
     <!-- Custom styles for this template -->
     <link href="navbar-static-top.css" rel="stylesheet">
 
@@ -59,6 +59,11 @@
 
     .center {
       display:table; width:auto; margin-left:auto; margin-right:auto;
+    }
+
+    .col-md-9 {
+      padding-left: 10px;
+      padding-right: 3px;
     }
 
 	</style>
@@ -161,13 +166,23 @@
       
     </div>
     <div id="col-content-right" class="col-md-9">
-      <p contentEditable="true">如何写一篇文章</p>
-      <p id="currentSectionTitle"></p>
+      <div id="main-title">
+        <p contentEditable="true">如何写一篇文章</p>
+        <p id="currentSectionTitle">关键字 | 关键字 | REFERENCE</p>
+      </div>
      <!-- 编辑器 -->
-     <div style="width:100%">
-        <div id="div1" style="height:600px;">
-            <p>请输入内容...</p>
-        </div>
+     <div id="section">
+      <div id="operation">
+        <button type="button" class="btn btn-default btn-xs">reference</button>
+        <button type="button" class="btn btn-default btn-xs">markdown</button>
+        <button type="button" class="btn btn-default btn-xs">全屏</button>
+      </div>
+      
+      <div class="editor-wrapper">
+        <textarea id="editor" placeholder="Content here ...."></textarea>
+      </div>
+
+      <button class="btn btn-primary"> SAVE </button>
      </div>
      <!-- 编辑器 -->
     </div>
@@ -185,17 +200,18 @@
     
   </body>
 <script type="text/javascript" src="dist/js/wangEditor.min.js"></script>
-<!--这里引用jquery和wangEditor.js-->
-<script type="text/javascript">
-    var editor = new wangEditor('div1');
-    editor.create();
-    
-</script>
+    <!-- only required for loading sample markdown into the textarea -->
+
+<script src="http://cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
+<script src="http://cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
 
 <script type="text/javascript">
 var g_winHeight = 0;
 
 $(document).ready(function() {
+
+  var editor = new Editor();
+  editor.render();
 
 // 控件高度设置
 	var winHeight = $(window).height(); //浏览器当前窗口可视区域高度

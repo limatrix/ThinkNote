@@ -37,8 +37,8 @@ keyword
 keyforarticle --- 文章的关键字
 id，
 userid,
-keywordid,
 articleid,
+keywordid,
 
 keyfornote - 用户随时记录的关键字
 id,
