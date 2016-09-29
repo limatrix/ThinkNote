@@ -22,4 +22,9 @@ class Article extends CI_Controller {
 	{
 		$this->load->view('welcome_message');
 	}
+
+	public function create()
+	{
+		$this->load->view('article', array('flag' => 'create'));
+	}
 }
