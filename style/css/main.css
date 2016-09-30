@@ -74,3 +74,12 @@
     transition: all 300ms ease;
     -webkit-backface-visibility: hidden;
 }
+.tagWrapper .in {
+    background-color: #d7ebf8;
+    border: 1px solid #448aff;
+    text-shadow: 0 0 1px rgba(255,255,255,.375);
+}
+
+.spangap {
+    margin-left:3px;
+}

@@ -23,14 +23,16 @@
     <div class="container">
         <!-- 标题 -->
         <div class="row clearfix">
+            <!-- 网站名 -->
             <div style="float:left;">
                 <p>ThinkNote</p>
             </div>
+            <!-- 显示TAG的地方 -->
             <div id="tagView" style="float:left;width:19%;">
-                <!-- <p contentEditable="true">关键字,关键字,关键字</p> -->
-                <p>
+                <p id="tagList">
                     <span id="addTagGlyph" class="glyphicon glyphicon-plus" style="cursor:pointer;"></span>
                     <span id="notag"> 还没有标签哦</span>
+
                 </p>
             </div>
             <div style="float:left;width:50%;">
@@ -48,7 +50,7 @@
             </div>
 
             <div>
-                <input type="text" placeholder="回车增加标签"/>
+                <input id="addTag" type="text" placeholder="回车增加标签"/>
                 <button type="button" class="btn btn-default btn-sm" id="tagWrapperClose">关闭</button>
             </div>
         </div>
@@ -128,14 +130,52 @@ function initTagWrapper() {
     });
 
     $("#tagWrapper").on('click', 'li', function(){
-        //alert($(this).text());
-        alert($("#notag").length > 0);
+        //alert($("#notag").length > 0);
+        //<span id="notag"> 还没有标签哦</span>
+        //console.log($(this));
+        if ($(this).hasClass("in")) {
+            $(this).removeClass("in");
+            var curTag = $(this).text();
+            //console.log($("#tagList #tag").length);
+            $("#tagList #tag").each(function(){
+                if( curTag == $(this).text()) {
+                    $(this).remove();
+                }
+            });
+
+            if($("#tagList #tag").length == 0) {
+                $("#tagList").append('<span id="notag"> 还没有标签哦</span>');
+            }
+        } else {
+            $(this).addClass("in");
+            if($("#notag").length > 0) {
+                $("#notag").remove();
+            }
+
+            $("#tagList").append('<span id="tag" class="label label-default spangap">' + $(this).text() + '</span>');
+        }
+
     });
 
     $("#tagWrapperClose").click(function(){
         $("#tagWrapper").toggle();
     });
 
+    $("#addTag").keydown(function(event){
+        //console.log(event);
+        if(event.keyCode == 13){
+             addTag($(this));
+        }   
+    });
+}
+
+function addTag(obj) {
+    //将tag显示
+    //console.log($("#tagWrapper #tag").html());
+    $("#tagWrapper #tag").append("<li>" + obj.val() + "</li>");
+    obj.val("");
+
+    //传到数据库
 }
 
 $(document).ready(function() {
