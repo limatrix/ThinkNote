@@ -80,6 +80,6 @@
     text-shadow: 0 0 1px rgba(255,255,255,.375);
 }
 
-.spangap {
-    margin-left:3px;
+#displayContent p {
+    cursor: pointer;
 }

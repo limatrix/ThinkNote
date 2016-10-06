@@ -13,7 +13,6 @@
   <script>
   $( function() {
     $( "#sortable" ).sortable();
-    $( "#sortable" ).disableSelection();
   } );
   </script>
 </head>
@@ -30,7 +29,7 @@
 function onSave() {
   //alert($('#sortable p').length);
   $('#sortable p').each(function(){
-    ($(this).text());alert
+    alert($(this).text());
   });
 }
 // http://www.wangeditor.com/
