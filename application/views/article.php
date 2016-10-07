@@ -23,6 +23,7 @@
     <div class="container">
         <!-- 标题 -->
         <div class="row clearfix">
+            <div class="col-md-3 ">
             <!-- 网站名 -->
             <!-- <div style="float:left; height:40px; line-height:40px;">
                 <h4>ThinkNote</h4>
@@ -32,7 +33,7 @@
                 <span id="addTagGlyph" class="glyphicon glyphicon-plus" style="cursor:pointer;"></span>
             </div>
             <!-- <div id="tagView" style="float:left;width:19%;height:20px;overflow:hidden;"> height:auto --> 
-            <div id="tagView" style="float:left;width:17%; height:40px; line-height:36px;">
+            <div id="tagView" style="float:left;height:40px; line-height:36px;">
                     
                     <!-- <span id="notag"> 还没有标签哦</span> -->
                     
@@ -43,17 +44,19 @@
                     <span id="tag" class="label label-default">123</span>
                     
             </div>
-            <div style="float:left;width:50%; height:40px; line-height:40px;">
+            </div>
+            <div class="col-md-9">
+            <div style="float:left;height:40px; line-height:40px;">
                 <!-- <p contentEditable="true"> -->点此添加标题点此添加标题点此添加标题点此添加标题点此添加标题点此添加标题
                 <!-- </p> -->
             </div>
-            <div style="float:left; height:40px; line-height:40px;">
+            <div style="float:right; height:40px; line-height:40px;">
                 参考
             </div>
             <div style="float:right;  height:40px; line-height:40px;">
             <button class="btn btn-success btn-xs">保存</button>
             </div>
-        
+            </div>
         </div>
 
         <div id="tagWrapper" class="tagWrapper" style="position:fixed; display:none; width:360px; max-height:250px; overflow:auto; border:1px solid #ddd; padding:10px;">
