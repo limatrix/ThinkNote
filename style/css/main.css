@@ -8,7 +8,7 @@
         width: 100%;
     }
     
-    p {
+    .contentHolder p {
         font-size: 14px;
         line-height: 1.2;
         margin: 1em 1em 1em 0em;
@@ -82,4 +82,29 @@
 
 #displayContent p {
     cursor: pointer;
+}
+
+#tagView li {
+    display: block;
+    float: left;
+    max-width: 100px;
+    padding: 2px 8px 1px 8px;
+    margin: 0 3px 3px 0;
+    color: #555;
+    background-color: #eaeaea;
+    border-radius: 4px;
+    /*box-shadow: 0 0 2px rgba(0,0,0,.25);*/
+    -webkit-transition: all 100ms ease;
+    transition: all 100ms ease;
+    -webkit-backface-visibility: hidden;
+    font-size: 12px;
+}
+
+.more {
+    width: 30px;
+    font-size: 12px;
+    line-height: 20px;
+    color: #999;
+    text-align: right;
+    cursor: pointer
 }

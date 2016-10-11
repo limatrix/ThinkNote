@@ -21,54 +21,6 @@
 
 <body>
     <div class="container">
-        <!-- 标题 -->
-        <div class="row clearfix">
-            <div class="col-md-3 ">
-            <!-- 网站名 -->
-            <!-- <div style="float:left; height:40px; line-height:40px;">
-                <h4>ThinkNote</h4>
-            </div> -->
-            <!-- 显示TAG的地方 -->
-            <div style="float:left; margin-left:8px; margin-right:8px; height:40px; line-height:40px;">
-                <span id="addTagGlyph" class="glyphicon glyphicon-plus" style="cursor:pointer;"></span>
-            </div>
-            <!-- <div id="tagView" style="float:left;width:19%;height:20px;overflow:hidden;"> height:auto --> 
-            <div id="tagView" style="float:left;height:40px; line-height:36px;">
-                    
-                    <!-- <span id="notag"> 还没有标签哦</span> -->
-                    
-                    <span id="tag" class="label label-default">123</span>
-                    <span id="tag" class="label label-default">123</span>
-                    <span id="tag" class="label label-default">123</span>
-                    <span id="tag" class="label label-default">123</span>
-                    <span id="tag" class="label label-default">123</span>
-                    
-            </div>
-            </div>
-            <div class="col-md-9">
-            <div style="float:left;height:40px; line-height:40px;">
-                <!-- <p contentEditable="true"> -->点此添加标题点此添加标题点此添加标题点此添加标题点此添加标题点此添加标题
-                <!-- </p> -->
-            </div>
-            <div style="float:right; height:40px; line-height:40px;">
-                参考
-            </div>
-            <div style="float:right;  height:40px; line-height:40px;">
-            <button class="btn btn-success btn-xs">保存</button>
-            </div>
-            </div>
-        </div>
-
-        <div id="tagWrapper" class="tagWrapper" style="position:fixed; display:none; width:360px; max-height:250px; overflow:auto; border:1px solid #ddd; padding:10px;">
-            <div id="tag">
-                <!-- <li>汽车</li><li>飞机</li><li>坦克</li><li>导弹</li> -->
-            </div>
-
-            <div>
-                <input id="addTag" type="text" placeholder="回车增加标签"/>
-                <button type="button" class="btn btn-default btn-sm" id="tagWrapperClose">关闭</button>
-            </div>
-        </div>
         <!-- 问题记录 -->
         <!-- 滚动条: 需要样式contentHolder, 需要固定高度$('#content').height(winHeight - offset - 100);-->
         <!-- bootstrap居中: style="display:table; width:auto; margin-left:auto; margin-right:auto"  -->
@@ -77,6 +29,8 @@
         <!-- 隐藏滚动条：overflow:hidden -->
         <div class="row clearfix">
             <div id="title-wrapper" class="col-md-3 title-border">
+                <h4>ThinkNote <small>Keep Thinking, Keep Noting</small></h4>
+                <!-- title -->
                 <div id="content" class="contentHolder" style="padding-top:0px;">
                     <div id="editContent">
 
@@ -88,67 +42,60 @@
                 <div id="titleOpt" class="center" style="padding-top:20px;">
                     
                 </div>
+                <!-- title -->
+                <!-- hidden -->
+                <div id="tagWrapper" class="tagWrapper" style="position:fixed; display:none; width:360px; max-height:250px; overflow:auto; border:1px solid #ddd; padding:10px;">
+                    <div id="tag">
+                        <li>汽车</li><li>飞机</li><li>坦克</li><li>导弹</li><li>123456789</li><li>22222222</li>
+                        <li>33333333</li><li>44444444</li><li>555555555</li><li>6666666</li><li>7777777</li>
+                        <li>88888888</li><li>99999999</li><li>33333333</li><li>44444444</li><li>555555555</li><li>6666666</li><li>7777777</li>
+                        <li>88888888</li><li>99999999</li><li>33333333</li><li>44444444</li><li>555555555</li><li>6666666</li><li>7777777</li>
+                        <li>88888888</li><li>99999999</li>
+                    </div>
+
+                    <div>
+                        <input id="addTag" type="text" placeholder="回车增加标签"/>
+                        <button type="button" class="btn btn-default btn-sm" id="tagWrapperClose">关闭</button>
+                    </div>
+                </div>
+                <!-- hidden -->
             </div>
             <div id="col-content-right" class="col-md-9">
-                
-                <div id="operation" style="height:30px;">
+                <!-- article title -->
+                <div style="margin-top:10px; width:100%; ">
+                    <div style="display:inline-block; width:65%; ">
+                    <p contentEditable="true">点此添加标题点此添加标题点此添加标题点此添加标题点此添加标题点此添加标题</p>
+                    </div>
+                    <div style="display:inline-block; width:30%; ">
+                        参考
+                    </div>
+                    <div style="display:inline-block;" >
+                        <button class="btn btn-success btn-xs">保存</button>
+                    </div>    
+                    
+                </div>
+                <!-- article title -->
+                <!-- keywords -->
+                <div style="">
+                    <div style="display:inline-block; vertical-align:middle; height:23px; ">
+                        <span id="addTagGlyph" class="glyphicon glyphicon-plus" style="cursor:pointer;"></span>
+                    </div>
+                    <div id="tagView" style="display:inline-block; vertical-align:top; height:23px; width:93%; min-height:23px; overflow:hidden;">
+                        
+                        <span id="notag"> 还没有标签哦</span>        
+                        
+                    </div>
+                    <div style="display: inline-block; width:30px; float:right;">
+                        <span class="more" onclick="expandTag()" style="display:none; ">更多</span>
+                    </div>
+                </div>
+                <!-- keywords -->
+                <!-- <div id="operation" style="height:30px; display:block;">
                     <div style="float:left;"><span id="section-title">xxxxxxx</span></div>
                     <div style="float:right;">
                         <button type="button" class="btn btn-default btn-xs">reference</button>
                     </div>
-                </div>
-                <!-- // -->
-<div class="tab" role="tabpanel">
-<!-- Nav tabs -->
-<ul class="nav nav-tabs" role="tablist" style="margin-top:0px;" id="docTabs">
-<li role="presentation" class="active"><a href="#Section_new"
-aria-controls="home" role="tab" data-toggle="tab"> 最新最新最新最新最新最新最新最新最新最新</a></li>
-<li role="presentation"><a href="#Section_week"
-aria-controls="profile" role="tab" data-toggle="tab">7天热门7天热门7天热门7天热门7天热门7天热门7天热门</a></li>
-<li role="presentation"><a href="#Section_month"
-aria-controls="messages" role="tab" data-toggle="tab">30天热门</a></li>
-<li role="presentation"><a href="#Section_week"
-aria-controls="profile" role="tab" data-toggle="tab">7天热门</a></li>
-<li role="presentation"><a href="#Section_month"
-aria-controls="messages" role="tab" data-toggle="tab">30天热门</a></li>
-<li role="presentation"><a href="#Section_week"
-aria-controls="profile" role="tab" data-toggle="tab">7天热门</a></li>
-<li role="presentation"><a href="#Section_month"
-aria-controls="messages" role="tab" data-toggle="tab">30天热门</a></li>
-<li role="presentation"><a href="#Section_week"
-aria-controls="profile" role="tab" data-toggle="tab">7天热门</a></li>
-<li role="presentation"><a href="#Section_month"
-aria-controls="messages" role="tab" data-toggle="tab">30天热门</a></li>
-<li role="presentation"><a href="#Section_week"
-aria-controls="profile" role="tab" data-toggle="tab">7天热门</a></li>
-<li role="presentation"><a href="#Section_month"
-aria-controls="messages" role="tab" data-toggle="tab">30天热门</a></li>
-<li role="presentation"><a href="#Section_week"
-aria-controls="profile" role="tab" data-toggle="tab">7天热门</a></li>
-<li role="presentation"><a href="#Section_month"
-aria-controls="messages" role="tab" data-toggle="tab">30天热门</a></li>
-</ul>
-<!-- Tab panes -->
-<div class="tab-content">
-<div role="tabpanel" class="tab-pane fade in active" id="Section_new">
-<p>
-    tab1中的内容
-</p>
-</div>
-<div role="tabpanel" class="tab-pane fade" id="Section_week">
-<p>
-     tab2中的内容
-</p>
-</div>
-<div role="tabpanel" class="tab-pane fade" id="Section_month">
-<p>
-    tab3中的内容
-</p>
-</div>
-</div>
-</div>
-
-                <!-- // -->
+                </div> -->
                 <!-- 编辑器 -->
                 <div id="section">
                     <div class="editor-wrapper">
@@ -162,7 +109,7 @@ aria-controls="messages" role="tab" data-toggle="tab">30天热门</a></li>
     </div>
 
 </body>
-<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="http://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/style/js/editor.js"></script>
 <script src="/style/js/marked.js"></script>
@@ -203,13 +150,16 @@ function initTagWrapper() {
             $(this).removeClass("in");
             var curTag = $(this).text();
             //console.log($("#tagList #tag").length);
-            $("#tagView #tag").each(function(){
+            $("#tagView li").each(function(){
                 if( curTag == $(this).text()) {
                     $(this).remove();
+                    if($("#tagView").prop("scrollHeight") == $("#tagView").prop("clientHeight")) {
+                        $(".more").css("display", "none");
+                    }
                 }
             });
 
-            if($("#tagView #tag").length == 0) {
+            if($("#tagView li").length == 0) {
                 $("#tagView").append('<span id="notag"> 还没有标签哦</span>');
             }
         } else {
@@ -218,7 +168,10 @@ function initTagWrapper() {
                 $("#notag").remove();
             }
 
-            $("#tagView").append('<span id="tag" class="label label-default">' + $(this).text() + '</span>');
+            $("#tagView").append('<li>' + $(this).text() + '</li>');
+            if($("#tagView").prop("scrollHeight") > $("#tagView").prop("clientHeight")) {
+                $(".more").css("display", "inline");
+            }
         }
 
     });
@@ -258,7 +211,7 @@ $(document).ready(function() {
     <?php if($flag == 'create') { ?>
     initTitleContent();
     addEditEvent();
-    displayEnsure();
+    displayEditEnsure();
     <?php } ?>
 
     initSortable();
@@ -361,7 +314,7 @@ function reSequenceTitle() {
 
 // 1. 删掉默认的没被修改的TITLE
 // 2. 重排SEQ
-function ensureTitle() {
+function ensureTitle1() {
     if($("#editContent p").length > 1) {
         cancelDefaultTitle();
         reSequenceTitle();
@@ -369,21 +322,23 @@ function ensureTitle() {
 
     displayEditAndSort();
     hideEditContent();
-    // $("#displayContent").sortable({disabled:true});
+}
+
+function ensureTitle2() {
     $("#displayContent").sortable("option", "disabled", true);
-    // $( ".selector" ).sortable({
-    //   stop: function( event, ui ) {}
-    // });
+    displayEditAndSort();
+    //reSequenceTitle();
+    flushEditContent();
 }
 
 function editTitle() {
     displayEditContent();
-    displayEnsure();
+    displayEditEnsure();
 }
 
 function dragTitle() {
     $("#displayContent").sortable("option", "disabled", false);
-    displayEnsure();
+    displayDragEnsure();
 }
 
 function openSection(obj) {
@@ -403,6 +358,17 @@ function setTagWrapperOffset() {
 
 //子函数
 //========================================================================
+
+function expandTag() {
+    if($(".more").text() == "更多") {
+        $("#tagView").css("height", "auto");
+        $(".more").text("收起");
+    } else {
+        $("#tagView").css("height", "23px");
+        $(".more").text("更多");
+    }
+    
+}
 
 /*-----------------------------------------------------------------------
  * TITLE 
@@ -435,6 +401,14 @@ function cancelDefaultTitle() {
     });
 }
 
+function flushEditContent() {
+    $("#editContent").empty();
+
+    $("#displayContent p").each(function(){
+        $("#editContent").append
+    });
+}
+
 function displayEditAndSort() {
     var titleOpt = $("#titleOpt");
     var str = '<button class="btn btn-default btn-sm" onclick="editTitle();">编辑</button><button class="btn btn-default btn-sm" onclick="dragTitle()">排序</button>';
@@ -442,9 +416,16 @@ function displayEditAndSort() {
     titleOpt.append(str);
 }
 
-function displayEnsure() {
+function displayEditEnsure() {
     var titleOpt = $("#titleOpt");
-    var str = '<button class="btn btn-default btn-sm" onclick="ensureTitle();">确定</button>';
+    var str = '<button class="btn btn-default btn-sm" onclick="ensureTitle1();">确定</button>';
+    titleOpt.empty();
+    titleOpt.append(str);
+}
+
+function displayDragEnsure() {
+    var titleOpt = $("#titleOpt");
+    var str = '<button class="btn btn-default btn-sm" onclick="ensureTitle2();">确定</button>';
     titleOpt.empty();
     titleOpt.append(str);
 }
