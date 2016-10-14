@@ -11,10 +11,13 @@
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="http://cdn.jsdelivr.net/editor/0.1.0/editor.css" rel="stylesheet" >
     <link href="/style/css/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="/style/css/wangEditor.min.css" rel="stylesheet">
     <link href="/style/css/main.css" rel="stylesheet">
 
     <script src="/style/js/jquery.min.js"></script>
     <script src="/style/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="/style/js/md5.min.js"></script>
+    
 
       
 </head>
@@ -43,22 +46,6 @@
                     
                 </div>
                 <!-- title -->
-                <!-- hidden -->
-                <div id="tagWrapper" class="tagWrapper" style="position:fixed; display:none; width:360px; max-height:250px; overflow:auto; border:1px solid #ddd; padding:10px;">
-                    <div id="tag">
-                        <li>汽车</li><li>飞机</li><li>坦克</li><li>导弹</li><li>123456789</li><li>22222222</li>
-                        <li>33333333</li><li>44444444</li><li>555555555</li><li>6666666</li><li>7777777</li>
-                        <li>88888888</li><li>99999999</li><li>33333333</li><li>44444444</li><li>555555555</li><li>6666666</li><li>7777777</li>
-                        <li>88888888</li><li>99999999</li><li>33333333</li><li>44444444</li><li>555555555</li><li>6666666</li><li>7777777</li>
-                        <li>88888888</li><li>99999999</li>
-                    </div>
-
-                    <div>
-                        <input id="addTag" type="text" placeholder="回车增加标签"/>
-                        <button type="button" class="btn btn-default btn-sm" id="tagWrapperClose">关闭</button>
-                    </div>
-                </div>
-                <!-- hidden -->
             </div>
             <div id="col-content-right" class="col-md-9">
                 <!-- article title -->
@@ -66,8 +53,11 @@
                     <div style="display:inline-block; width:65%; ">
                     <p contentEditable="true">点此添加标题点此添加标题点此添加标题点此添加标题点此添加标题点此添加标题</p>
                     </div>
-                    <div style="display:inline-block; width:30%; ">
-                        参考
+                    <div id="articleRef" style="display:inline-block; width:14%; cursor: pointer; ">
+                        全文参考
+                    </div>
+                    <div id="sectionRef" style="display:inline-block; width:14%; cursor: pointer;">
+                        章节参考
                     </div>
                     <div style="display:inline-block;" >
                         <button class="btn btn-success btn-xs">保存</button>
@@ -88,6 +78,49 @@
                     <div style="display: inline-block; width:30px; float:right;">
                         <span class="more" onclick="expandTag()" style="display:none; ">更多</span>
                     </div>
+
+                    <!-- hidden -->
+                    <!-- tag -->
+                    <div id="tagWrapper" class="tagWrapper" style="display:none; width:100%; border:1px solid #ddd; padding:10px;">
+                        <div id="tag">
+                            <li>汽车</li><li>飞机</li><li>坦克</li><li>导弹</li><li>123456789</li><li>22222222</li>
+                            <li>33333333</li><li>44444444</li><li>555555555</li><li>6666666</li><li>7777777</li>
+                            <li>88888888</li><li>99999999</li><li>33333333</li><li>44444444</li><li>555555555</li><li>6666666</li><li>7777777</li>
+                            <li>88888888</li><li>99999999</li><li>33333333</li><li>44444444</li><li>555555555</li><li>6666666</li><li>7777777</li>
+                            <li>88888888</li><li>99999999</li>
+                        </div>
+
+                        <div>
+                            <input id="addTag" type="text" placeholder="回车增加标签"/>
+                            <button type="button" class="btn btn-default btn-sm" id="tagWrapperClose">关闭</button>
+                        </div>
+                    </div>
+
+                    <!-- article-ref -->
+                    <div id="articleRefWrapper" style="display:none; width:100%; border:1px solid #ddd; padding:10px; max-height:300px; overflow:auto;">
+                        <p><a id="newArticleRef"href="#">新建</a></p>
+                        <p><a href="#">1111111111111111111111111111111111111</a></p>
+                        <p><a href="#">1111111111111111111111111111111111111</a></p>
+                        <p><a href="#">1111111111111111111111111111111111111</a></p>
+                        <p><a href="#">1111111111111111111111111111111111111</a></p>
+                    </div>
+
+                    <div id="sectionRefWrapper" style="display:none; width:100%; border:1px solid #ddd; padding:10px; max-height:300px; overflow:auto;">
+                        <p><a href="#">2222222222222222222222222222222222222</a></p>
+                        <p><a href="#">2222222222222222222222222222222222222</a></p>
+                        <p><a href="#">2222222222222222222222222222222222222</a></p>
+                        <p><a href="#">2222222222222222222222222222222222222</a></p>
+                    </div>
+
+                    <!-- wangeditor -->
+                    <!-- 通过父容器的宽度来限制 -->
+                    <div style="width:100%; display:none;"> 
+                        <!--用当前元素来控制高度-->
+                        <div id="fatEditor" style="height:600px;"></div>
+                        <button class="btn btn-default btn-sm">保存</button>
+                    </div>
+                    <!-- hidden -->
+
                 </div>
                 <!-- keywords -->
                 <!-- <div id="operation" style="height:30px; display:block;">
@@ -113,12 +146,14 @@
 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/style/js/editor.js"></script>
 <script src="/style/js/marked.js"></script>
+<script src="/style/js/reference.js"></script>
+<script src="/style/js/wangEditor.min.js"></script>
 <script type="text/javascript">
 var g_winHeight = 0;
-
+var editor;
 
 function initEditor() {
-    var editor = new Editor();
+    editor = new Editor();
     editor.render();
 }
 
@@ -138,7 +173,6 @@ function initTagWrapper() {
     //$("#tagWrapper").hide();
 
     $("#addTagGlyph").click(function(){
-        setTagWrapperOffset();
         $("#tagWrapper").toggle();
     });
 
@@ -196,6 +230,7 @@ function initTitleContent() {
 
 function initSortable() {
     $("#displayContent").sortable();
+    $("#displayContent").sortable("option", "disabled", true);
 }
 
 $(document).ready(function() {
@@ -207,6 +242,8 @@ $(document).ready(function() {
     initScrollbar();
 
     initTagWrapper();
+
+    //alert(md5('titme'+new Date().getTime()));
 
     <?php if($flag == 'create') { ?>
     initTitleContent();
@@ -327,7 +364,7 @@ function ensureTitle1() {
 function ensureTitle2() {
     $("#displayContent").sortable("option", "disabled", true);
     displayEditAndSort();
-    //reSequenceTitle();
+    reSequenceTitle();
     flushEditContent();
 }
 
@@ -346,16 +383,6 @@ function openSection(obj) {
     $("#section-title").text(obj.text());
 }
 
-function setTagWrapperOffset() {
-    var tagTop = $("#tagView").offset().top;
-    var tagleft = $("#tagView").offset().left;
-    var tagHeight = $("#tagView").height();
-
-    $("#tagWrapper").css('left', tagleft - 12 + 'px');
-    $("#tagWrapper").css('top', tagTop + tagHeight - 5 + 'px');
-}
-
-
 //子函数
 //========================================================================
 
@@ -368,6 +395,7 @@ function expandTag() {
         $(".more").text("更多");
     }
     
+    setTagWrapperOffset();
 }
 
 /*-----------------------------------------------------------------------
@@ -405,7 +433,7 @@ function flushEditContent() {
     $("#editContent").empty();
 
     $("#displayContent p").each(function(){
-        $("#editContent").append
+        $("#editContent").append('<p seq="'+$(this).attr("seq")+'" titid="'+$(this).attr("titid")+'" contenteditable="true">'+$(this).text()+'</p>');
     });
 }
 
@@ -451,8 +479,34 @@ function addEditTitle(nextSeq) {
         content.perfectScrollbar("update");
     }
 }
+////////////////////////////////////////////////////////////////////
+//reference
+$("#articleRef").click(function(){
+    $("#articleRefWrapper").toggle();
+});
 
+$("#sectionRef").click(function(){
+    $("#sectionRefWrapper").toggle();
+});
 
+$("#newArticleRef").click(function(){
+    
+});
+
+var editor = new wangEditor('fatEditor');
+editor.config.menus = $.map(wangEditor.config.menus, function(item, key) {
+    if (item === 'location') {
+        return null;
+    }
+    if (item === 'video') {
+        return null;
+    }
+    if (item === 'emotion') {
+        return null;
+    }
+    return item;
+});
+editor.create();
 </script>
 
 </html>
