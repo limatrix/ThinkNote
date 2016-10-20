@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>editor</title>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://www.runoob.com/try/bootstrap/twitter-bootstrap-v2/docs/assets/css/bootstrap.css">
+</head>
+<body>
+	<div class="container">
+<h2>Example of creating Modals with Bootstrap</h2>
+<div id="example" class="modal hide fade in" style="display: none; ">
+<div class="modal-header">
+<a class="close" data-dismiss="modal">×</a>
+<h3>This is a Modal Heading</h3>
+</div>
+<div class="modal-body">
+<h4>Text in a modal</h4>
+<p>You can add some text here.</p>
+</div>
+<div class="modal-footer">
+<a href="#" class="btn btn-success">Call to action</a>
+<a href="#" class="btn" data-dismiss="modal">Close</a>
+</div>
+</div>
+<p><a data-toggle="modal" href="#example" class="btn btn-primary btn-large">Launch demo modal</a></p>
+<div oncontextmenu="javascript:showMenu(event);">
+高一下学期在青年文摘上看到俞敏洪讲的那个关于背诵新概念英语的小故事，深受感动，决心也要把新概念英语背诵下来。从学校图书馆借了一本第三册开始狂背，每天早上早操前到图书馆前面的小广场背二十分钟，晚上下晚自习后再背二十分钟，课间有时间就在练习本上抄课文。
+
+上完高一基本上把第三册前30课背烂了，而且打开书随便翻一页看到一个词组或者知识点，立刻能想到哪一课哪一课什么地方也用到了相同的句式，都在书上标记下来。意外收获就是每次英语考试就好像打开了上帝视角，真是随心应手。最爽的一次是，一个完形填空的题目竟然完整搬了一篇新概念英语3的课文，记得是第20课By Heart，里面有个比较难的知识点，全班只有我自己写对了答案，那种感觉真是不能更好。后来直到毕业还是不断在重复前30课的内容，就是忘了背背了忘。
+
+作者：李合新
+链接：https://www.zhihu.com/question/38455082/answer/125165058
+来源：知乎
+著作权归作者所有，转载请联系作者获得授权。
+</div>
+
+<div id="textMenu" style="width:200px; height:200px; display:none; position:fixed; background-color:rgb(230, 231, 234); z-index:1000;">
+	<ul>
+		<li style="cursor:pointer; display:block;">发送到章节参考</li>
+		<li style="cursor:pointer; display:block;">发送到章节参考</li>
+	</ul>
+</div>
+
+
+<button onclick="getContent()">获取</button>
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#textMenu").on('click', 'li', function(){
+			$("#textMenu").css("display", "none");
+		});
+	});
+
+	function getContent() {
+		var selectionObj = window.getSelection();
+　　	var selectedText = selectionObj.toString();
+		alert(selectedText);
+	}
+
+	function showMenu(event) {
+		getContent();
+		var x = event.pageX;
+		var y = event.pageY;
+		$("#textMenu").css("top", y + "px");
+		$("#textMenu").css("left", x + "px");
+		$("#textMenu").css("display", "block");
+		window.event.returnValue=false;
+		return false;
+	}
+</script>
+<script type="text/javascript" src="http://www.runoob.com/try/bootstrap/twitter-bootstrap-v2/js/bootstrap-modal.js"></script>
+</html>
