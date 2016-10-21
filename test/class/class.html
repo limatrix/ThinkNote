@@ -89,6 +89,8 @@
     </div>
 
 </body>
+<script src="http://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
 <script type="text/javascript">
 
 String.prototype.format = function(){    
@@ -131,6 +133,16 @@ Title.prototype = {
         this.displayEnsure();
         this.addTitle(1);
         this.bindEvent();
+        this.clickFlag = "edit";
+        this.initSortable();
+        this.resize();
+    },
+
+    resize : function() {
+        var winHeight = $(window).height();
+        var offset = this.father.offset().top;
+        this.father.height(winHeight - offset - 100);
+        this.father.parent().height(winHeight);
     },
 
     create : function() {
@@ -150,6 +162,12 @@ Title.prototype = {
         this.btnsort  = $("#editsort #sort");
         this.btnsure  = $("#ensure #sure");
     },
+
+    initSortable : function() {
+        this.display.sortable();
+        this.display.sortable("option", "disabled", true);
+    },
+
     // 1. 增加TITLE, editContent与displayContent一一对应
     // 2. 更新滚动条
     // 3. 将滚动条移动到最下面
@@ -194,12 +212,11 @@ Title.prototype = {
         });
 
         _this.btnedit.click(function(){
-            //_this.editclick();
-            console.log("this is edit button");
+            _this.editClick();
         });
 
         _this.btnsort.click(function(){
-            console.log("this is sort button");
+            _this.sortClick();
         });
 
         _this.btnsure.click(function(){
@@ -221,24 +238,48 @@ Title.prototype = {
     pOnBlur : function(o) {
         if (o.text() == "") {
             o.text(doc.pdefault);
-        } else {
-            var seq = o.attr("seq");
-            var text = o.text();
-            this.display.children("p").each(function(){
-                if(seq == $(this).attr("seq")) {
-                    $(this).text(text);
-                }
-            });
-        }
+        } 
+        var seq = o.attr("seq");
+        var text = o.text();
+        this.display.children("p").each(function(){
+            if(seq == $(this).attr("seq")) {
+                $(this).text(text);
+            }
+        });
     },
+
+    editClick : function() {
+        this.displayEdit();
+        this.displayEnsure();
+        this.clickFlag = "edit";
+    },
+
+    sortClick : function() {
+        this.display.sortable("option", "disabled", false);
+        this.displayEnsure();
+        this.clickFlag = "sort";
+    },
+
     // 1.删掉没被修改的标题 2.重排seq 3.显示编辑/排序按钮 4.显示displayEdit
     sureClick : function() {
-        if(this.edit.children("p").length > 1) {
-            this.reomveRedundancy();
+        if(this.clickFlag == "edit") {
+            console.log(this.edit.children("p").length);
+            if(this.edit.children("p").length > 1) {
+                this.reomveRedundancy();
+                this.reOrder();
+            }
+            this.hideEdit();
+            this.hideEnsure();
+        } else if (this.clickFlag == "sort") {
+            this.display.sortable("option", "disabled", true);
             this.reOrder();
+            this.hideEnsure();
+            this.flushEdit();
+        } else {
+            console.log("button operate failed");
         }
-        this.hideEdit();
-        this.hideEnsure();
+
+        this.clickFlag = "";
     },
     // 删掉没被修改的标题
     reomveRedundancy : function() {
@@ -259,11 +300,29 @@ Title.prototype = {
             }
         });
     },
-
-    //重排seq
+    // 重排seq
     reOrder : function() {
+        var seq = 1;
+        this.edit.children("p").each(function(){
+            $(this).attr("seq", seq);
+            seq = seq + 1;
+        });
 
+        seq = 1;
+        this.display.children("p").each(function(){
+            $(this).attr("seq", seq);
+            seq = seq + 1;
+        });
+    },
+    // 根据display重建edit
+    flushEdit : function() {
+        var _this = this;
+        _this.edit.empty();
+        _this.display.children("p").each(function(){
+            _this.edit.append(dom.pedit.format($(this).attr("seq"), $(this).attr("titid"), $(this).text()));
+        });
     }
+
 
 };
 
