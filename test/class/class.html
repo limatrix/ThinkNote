@@ -90,32 +90,31 @@ String.prototype.format = function() {
 }
 
 /////////////////////////////////////////////////////////////////////
-var doc = {
-    content     : "content",
-    edit        : "editContent",
-    display     : "displayContent",
-    operate     : "operate",
-    editsort    : "editsort",
-    ensure      : "ensure",
-    btnedit     : "edit",
-    btnsort     : "sort",
-    btnsure     : "sure",
-    pdefault    : "点击添加章节标题",
-}
-
-var dom = {
-    content     : '<div id="content" class="content"></div>',
-    edit        : '<div id="editContent"></div>',
-    display     : '<div id="displayContent"></div>',
-    pedit       : '<p seq="{0}" titid="{1}" contentEditable="true">{2}</p>',
-    pdisplay    : '<p seq="{0}" titid="{1}" >{2}</p>',
-    operate     : '<div id="operate"></div>',
-    editsort    : '<div id="editsort"><button id="edit">编辑</button><button id="sort">排序</button></div>',
-    ensure      : '<div id="ensure"><button id="sure">确定</button></div>',
-    nav         : '<h4>ThinkNote <small>Keep Thinking, Keep Noting</small></h4>',
-};
-
 function Title(father) {
+    this.doc = {
+        content     : "content",
+        edit        : "editContent",
+        display     : "displayContent",
+        operate     : "operate",
+        editsort    : "editsort",
+        ensure      : "ensure",
+        btnedit     : "edit",
+        btnsort     : "sort",
+        btnsure     : "sure",
+        pdefault    : "点击添加章节标题",
+    }
+
+    this.dom = {
+        content     : '<div id="content" class="content"></div>',
+        edit        : '<div id="editContent"></div>',
+        display     : '<div id="displayContent"></div>',
+        pedit       : '<p seq="{0}" titid="{1}" contentEditable="true">{2}</p>',
+        pdisplay    : '<p seq="{0}" titid="{1}" >{2}</p>',
+        operate     : '<div id="operate"></div>',
+        editsort    : '<div id="editsort"><button id="edit">编辑</button><button id="sort">排序</button></div>',
+        ensure      : '<div id="ensure"><button id="sure">确定</button></div>',
+        nav         : '<h4>ThinkNote <small>Keep Thinking, Keep Noting</small></h4>',
+    };
     // title-wrapper
     this.father = $("#" + father);
     this.init();
@@ -142,29 +141,29 @@ Title.prototype = {
 
     create: function() {
         // nav
-        this.father.append(dom.nav);
+        this.father.append(this.dom.nav);
         // content
-        this.father.append(dom.content);
-        this.content = $("#" + doc.content);
+        this.father.append(this.dom.content);
+        this.content = $("#" + this.doc.content);
         // editContent
-        this.content.append(dom.edit);
-        this.edit = $("#" + doc.edit);
+        this.content.append(this.dom.edit);
+        this.edit = $("#" + this.doc.edit);
         // displayContent
-        this.content.append(dom.display);
-        this.display = $("#" + doc.display);
+        this.content.append(this.dom.display);
+        this.display = $("#" + this.doc.display);
         // operate
-        this.father.append(dom.operate);
-        this.operate = $("#" + doc.operate);
+        this.father.append(this.dom.operate);
+        this.operate = $("#" + this.doc.operate);
         // edit and sort
-        this.operate.append(dom.editsort);
-        this.editsort = $("#" + doc.editsort);
+        this.operate.append(this.dom.editsort);
+        this.editsort = $("#" + this.doc.editsort);
         // ensure
-        this.operate.append(dom.ensure);
-        this.ensure = $("#" + doc.ensure);
+        this.operate.append(this.dom.ensure);
+        this.ensure = $("#" + this.doc.ensure);
         // btn
-        this.btnedit = $("#" + doc.editsort + " #" + doc.btnedit);
-        this.btnsort = $("#" + doc.editsort + " #" + doc.btnsort);
-        this.btnsure = $("#" + doc.ensure + " #" + doc.btnsure);
+        this.btnedit = $("#" + this.doc.editsort + " #" + this.doc.btnedit);
+        this.btnsort = $("#" + this.doc.editsort + " #" + this.doc.btnsort);
+        this.btnsure = $("#" + this.doc.ensure + " #" + this.doc.btnsure);
     },
 
     initScrollbar: function() {
@@ -181,8 +180,8 @@ Title.prototype = {
     // 3. 将滚动条移动到最下面
     addTitle: function(seq) {
         var titleID = md5((new Date).getTime());
-        this.edit.append(dom.pedit.format(seq, titleID, doc.pdefault));
-        this.display.append(dom.pdisplay.format(seq, titleID, doc.pdefault));
+        this.edit.append(this.dom.pedit.format(seq, titleID, this.doc.pdefault));
+        this.display.append(this.dom.pdisplay.format(seq, titleID, this.doc.pdefault));
         this.content.perfectScrollbar("update");
         //将滚动条移动到最下面
         var divHeight = this.content.height();
@@ -244,7 +243,7 @@ Title.prototype = {
     },
 
     pOnFocus: function(o) {
-        if (o.text() == doc.pdefault) {
+        if (o.text() == this.doc.pdefault) {
             o.text("");
         }
         var len = this.edit.children("p").length; //兄弟节点
@@ -256,7 +255,7 @@ Title.prototype = {
 
     pOnBlur: function(o) {
         if (o.text() == "") {
-            o.text(doc.pdefault);
+            o.text(this.doc.pdefault);
         }
         var seq = o.attr("seq");
         var text = o.text();
@@ -285,7 +284,6 @@ Title.prototype = {
     // 1.删掉没被修改的标题 2.重排seq 3.显示编辑/排序按钮 4.显示displayEdit
     sureClick: function() {
         if (this.clickFlag == "edit") {
-            console.log(this.edit.children("p").length);
             if (this.edit.children("p").length > 1) {
                 this.reomveRedundancy();
                 this.reOrder();
@@ -307,11 +305,11 @@ Title.prototype = {
     reomveRedundancy: function() {
         var _this = this;
         _this.edit.children("p").each(function() {
-            if ($(this).text() == doc.pdefault) {
+            if ($(this).text() == this.doc.pdefault) {
                 var seq = $(this).attr("seq");
                 _this.display.children("p").each(function() {
                     if (seq == $(this).attr("seq")) {
-                        if ($(this).text() == doc.pdefault) {
+                        if ($(this).text() == this.doc.pdefault) {
                             $(this).remove();
                         } else {
                             console.log("标题内容不一致");
@@ -341,14 +339,16 @@ Title.prototype = {
         var _this = this;
         _this.edit.empty();
         _this.display.children("p").each(function() {
-            _this.edit.append(dom.pedit.format($(this).attr("seq"), $(this).attr("titid"), $(this).text()));
+            _this.edit.append(this.dom.pedit.format($(this).attr("seq"), $(this).attr("titid"), $(this).text()));
         });
     }
-
-
 };
 
+/////////////////////////////////////////////////////////
+
+
 var title = new Title("title-wrapper");
+
 </script>
 
 </html>
