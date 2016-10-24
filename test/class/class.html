@@ -5,19 +5,15 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title></title>
     <!-- <link href="/style/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="../../style/css/main.css" rel="stylesheet">
-
+    <link href="../../style/css/perfect-scrollbar.min.css" rel="stylesheet">
     <script src="../../style/js/jquery.min.js"></script>
     <script src="../../style/js/perfect-scrollbar.jquery.min.js"></script>
     <script src="../../style/js/md5.min.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    
-
-      
 </head>
 
 <body>
@@ -28,20 +24,18 @@
         <!-- perfect 默认显示滚动条：always-visible -->
         <!-- 监听resize：$(window).resize(function() {});  -->
         <!-- 隐藏滚动条：overflow:hidden -->
+        <!-- <h4>ThinkNote <small>Keep Thinking, Keep Noting</small></h4> -->
+        <!-- <div id="content" class="content"></div> -->
+
         <div class="row clearfix">
             <div id="title-wrapper" class="col-md-3 title-border">
-                <h4>ThinkNote <small>Keep Thinking, Keep Noting</small></h4>
-                <!-- title -->
-                <div id="content" class="contentHolder" style="padding-top:0px;">
-                    
-                </div>
-                <!-- title -->
+                
             </div>
             <div id="col-content-right" class="col-md-9">
                 <!-- article title -->
                 <div style="margin-top:10px; width:100%; ">
                     <div style="display:inline-block; width:65%; ">
-                    <p contentEditable="true">点此添加标题点此添加标题点此添加标题点此添加标题点此添加标题点此添加标题</p>
+                        <p contentEditable="true">点此添加标题点此添加标题点此添加标题点此添加标题点此添加标题点此添加标题</p>
                     </div>
                     <div id="articleRef" style="display:inline-block; width:14%; cursor: pointer; ">
                         全文参考
@@ -49,10 +43,9 @@
                     <div id="sectionRef" style="display:inline-block; width:14%; cursor: pointer;">
                         章节参考
                     </div>
-                    <div style="display:inline-block;" >
+                    <div style="display:inline-block;">
                         <button class="btn btn-success btn-xs">保存</button>
-                    </div>    
-                    
+                    </div>
                 </div>
                 <!-- article title -->
                 <!-- keywords -->
@@ -61,13 +54,11 @@
                         <span id="addTagGlyph" class="glyphicon glyphicon-plus" style="cursor:pointer;"></span>
                     </div>
                     <div id="tagView" style="display:inline-block; vertical-align:top; height:23px; width:93%; min-height:23px; overflow:hidden;">
-                        
-                        <span id="notag"> 还没有标签哦</span>        
-                        
+                        <span id="notag"> 还没有标签哦</span>
                     </div>
                     <div style="display: inline-block; width:30px; float:right;">
                         <span class="more" onclick="expandTag()" style="display:none; ">更多</span>
-                    </div>  
+                    </div>
                 </div>
                 <!-- keywords -->
                 <!-- <div id="operation" style="height:30px; display:block;">
@@ -87,83 +78,100 @@
             </div>
         </div>
     </div>
-
 </body>
 <script src="http://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
 <script type="text/javascript">
-
-String.prototype.format = function(){    
-    var args = arguments;    
-    return this.replace(/\{(\d+)\}/g,                    
-        function(m,i){    
-            return args[i];    
-        });    
-}    
+String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/\{(\d+)\}/g,
+        function(m, i) {
+            return args[i];
+        });
+}
 
 /////////////////////////////////////////////////////////////////////
 var doc = {
-    edit : "editContent",
-    display : "displayContent",
-    operate : "operate",
-    editsort: "editsort",
-    ensure : "ensure",
-    pdefault : "点击添加章节标题",
+    content     : "content",
+    edit        : "editContent",
+    display     : "displayContent",
+    operate     : "operate",
+    editsort    : "editsort",
+    ensure      : "ensure",
+    btnedit     : "edit",
+    btnsort     : "sort",
+    btnsure     : "sure",
+    pdefault    : "点击添加章节标题",
 }
 
 var dom = {
-    edit : '<div id="editContent"></div>',
-    display : '<div id="displayContent"></div>',
-    pedit : '<p seq="{0}" titid="{1}" contentEditable="true">{2}</p>',
-    pdisplay : '<p seq="{0}" titid="{1}" >{2}</p>',
-    operate : '<div id="operate"></div>',
-    editsort : '<div id="editsort"><button id="edit">编辑</button><button id="sort">排序</button></div>',
-    ensure : '<div id="ensure"><button id="sure">确定</button></div>',
+    content     : '<div id="content" class="content"></div>',
+    edit        : '<div id="editContent"></div>',
+    display     : '<div id="displayContent"></div>',
+    pedit       : '<p seq="{0}" titid="{1}" contentEditable="true">{2}</p>',
+    pdisplay    : '<p seq="{0}" titid="{1}" >{2}</p>',
+    operate     : '<div id="operate"></div>',
+    editsort    : '<div id="editsort"><button id="edit">编辑</button><button id="sort">排序</button></div>',
+    ensure      : '<div id="ensure"><button id="sure">确定</button></div>',
+    nav         : '<h4>ThinkNote <small>Keep Thinking, Keep Noting</small></h4>',
 };
 
 function Title(father) {
-    this.father = $("#"+father);
+    // title-wrapper
+    this.father = $("#" + father);
     this.init();
 }
 
 Title.prototype = {
-    init : function() {
+    init: function() {
         this.create();
-        this.displayEdit();
-        this.displayEnsure();
-        this.addTitle(1);
         this.bindEvent();
-        this.clickFlag = "edit";
         this.initSortable();
         this.resize();
+        this.initScrollbar();
+        this.editClick();
     },
 
-    resize : function() {
+    resize: function() {
         var winHeight = $(window).height();
-        var offset = this.father.offset().top;
-        this.father.height(winHeight - offset - 100);
-        this.father.parent().height(winHeight);
+        var offset = this.content.offset().top;
+        // title-wrapper
+        this.father.height(winHeight);
+        this.content.height(winHeight - offset - 70);
+        this.content.perfectScrollbar("update");
     },
 
-    create : function() {
-        this.father.append(dom.edit);
-        this.father.append(dom.display);
-        this.edit    = $("#"+doc.edit);
-        this.display = $("#"+doc.display);
-        
-        $(dom.operate).insertAfter(this.father);
-        this.operate = $("#"+doc.operate);
-
+    create: function() {
+        // nav
+        this.father.append(dom.nav);
+        // content
+        this.father.append(dom.content);
+        this.content = $("#" + doc.content);
+        // editContent
+        this.content.append(dom.edit);
+        this.edit = $("#" + doc.edit);
+        // displayContent
+        this.content.append(dom.display);
+        this.display = $("#" + doc.display);
+        // operate
+        this.father.append(dom.operate);
+        this.operate = $("#" + doc.operate);
+        // edit and sort
         this.operate.append(dom.editsort);
+        this.editsort = $("#" + doc.editsort);
+        // ensure
         this.operate.append(dom.ensure);
-        this.editsort = $("#"+doc.editsort);
-        this.ensure   = $("#"+doc.ensure);
-        this.btnedit  = $("#editsort #edit");
-        this.btnsort  = $("#editsort #sort");
-        this.btnsure  = $("#ensure #sure");
+        this.ensure = $("#" + doc.ensure);
+        // btn
+        this.btnedit = $("#" + doc.editsort + " #" + doc.btnedit);
+        this.btnsort = $("#" + doc.editsort + " #" + doc.btnsort);
+        this.btnsure = $("#" + doc.ensure + " #" + doc.btnsure);
     },
 
-    initSortable : function() {
+    initScrollbar: function() {
+        this.content.perfectScrollbar();
+    },
+
+    initSortable: function() {
         this.display.sortable();
         this.display.sortable("option", "disabled", true);
     },
@@ -171,100 +179,114 @@ Title.prototype = {
     // 1. 增加TITLE, editContent与displayContent一一对应
     // 2. 更新滚动条
     // 3. 将滚动条移动到最下面
-    addTitle : function(seq) {
+    addTitle: function(seq) {
         var titleID = md5((new Date).getTime());
         this.edit.append(dom.pedit.format(seq, titleID, doc.pdefault));
         this.display.append(dom.pdisplay.format(seq, titleID, doc.pdefault));
+        this.content.perfectScrollbar("update");
+        //将滚动条移动到最下面
+        var divHeight = this.content.height();
+        if (this.content.prop("scrollHeight") > divHeight) {
+            this.content.scrollTop(this.content.prop("scrollHeight") - divHeight + 100);
+            this.content.perfectScrollbar("update");
+        }
     },
 
-    displayEdit : function() {
+    displayEdit: function() {
         this.edit.css('display', 'block');
         this.display.css('display', 'none');
     },
 
-    hideEdit : function() {
+    hideEdit: function() {
         this.edit.css('display', 'none');
         this.display.css('display', 'block');
     },
 
-    displayEnsure : function() {
+    displayEnsure: function() {
         this.editsort.css("display", "none");
         this.ensure.css("display", "block");
     },
 
-    hideEnsure : function() {
+    hideEnsure: function() {
         this.editsort.css("display", "block");
         this.ensure.css("display", "none");
     },
 
-    bindEvent : function() {
+    bindEvent: function() {
         var _this = this;
-        _this.edit.on("focus", "p", function(){
+        _this.edit.on("focus", "p", function() {
             _this.pOnFocus($(this));
         });
 
-        _this.edit.on("blur", "p", function(){
+        _this.edit.on("blur", "p", function() {
             _this.pOnBlur($(this));
         });
 
-        _this.display.on("click", "p", function(){
+        _this.display.on("click", "p", function() {
             //displaycallback($this);
         });
 
-        _this.btnedit.click(function(){
+        _this.btnedit.click(function() {
             _this.editClick();
         });
 
-        _this.btnsort.click(function(){
+        _this.btnsort.click(function() {
             _this.sortClick();
         });
 
-        _this.btnsure.click(function(){
+        _this.btnsure.click(function() {
             _this.sureClick();
+        });
+
+        $(window).resize(function() {
+            _this.resize();
         });
     },
 
-    pOnFocus : function(o) {
-        if(o.text() == doc.pdefault) {
+    pOnFocus: function(o) {
+        if (o.text() == doc.pdefault) {
             o.text("");
         }
         var len = this.edit.children("p").length; //兄弟节点
         var seq = parseInt(o.attr("seq"));
-        if(len == seq) {
+        if (len == seq) {
             this.addTitle(seq + 1);
         }
     },
 
-    pOnBlur : function(o) {
+    pOnBlur: function(o) {
         if (o.text() == "") {
             o.text(doc.pdefault);
-        } 
+        }
         var seq = o.attr("seq");
         var text = o.text();
-        this.display.children("p").each(function(){
-            if(seq == $(this).attr("seq")) {
+        this.display.children("p").each(function() {
+            if (seq == $(this).attr("seq")) {
                 $(this).text(text);
             }
         });
     },
 
-    editClick : function() {
+    editClick: function() {
         this.displayEdit();
         this.displayEnsure();
+        if(this.edit.children("p").length == 0) {
+            this.addTitle(1);
+        }
         this.clickFlag = "edit";
     },
 
-    sortClick : function() {
+    sortClick: function() {
         this.display.sortable("option", "disabled", false);
         this.displayEnsure();
         this.clickFlag = "sort";
     },
 
     // 1.删掉没被修改的标题 2.重排seq 3.显示编辑/排序按钮 4.显示displayEdit
-    sureClick : function() {
-        if(this.clickFlag == "edit") {
+    sureClick: function() {
+        if (this.clickFlag == "edit") {
             console.log(this.edit.children("p").length);
-            if(this.edit.children("p").length > 1) {
+            if (this.edit.children("p").length > 1) {
                 this.reomveRedundancy();
                 this.reOrder();
             }
@@ -282,14 +304,14 @@ Title.prototype = {
         this.clickFlag = "";
     },
     // 删掉没被修改的标题
-    reomveRedundancy : function() {
+    reomveRedundancy: function() {
         var _this = this;
-        _this.edit.children("p").each(function(){
-            if($(this).text() == doc.pdefault) {
+        _this.edit.children("p").each(function() {
+            if ($(this).text() == doc.pdefault) {
                 var seq = $(this).attr("seq");
-                _this.display.children("p").each(function(){
-                    if(seq == $(this).attr("seq")) {
-                        if($(this).text() == doc.pdefault) {
+                _this.display.children("p").each(function() {
+                    if (seq == $(this).attr("seq")) {
+                        if ($(this).text() == doc.pdefault) {
                             $(this).remove();
                         } else {
                             console.log("标题内容不一致");
@@ -301,24 +323,24 @@ Title.prototype = {
         });
     },
     // 重排seq
-    reOrder : function() {
+    reOrder: function() {
         var seq = 1;
-        this.edit.children("p").each(function(){
+        this.edit.children("p").each(function() {
             $(this).attr("seq", seq);
             seq = seq + 1;
         });
 
         seq = 1;
-        this.display.children("p").each(function(){
+        this.display.children("p").each(function() {
             $(this).attr("seq", seq);
             seq = seq + 1;
         });
     },
     // 根据display重建edit
-    flushEdit : function() {
+    flushEdit: function() {
         var _this = this;
         _this.edit.empty();
-        _this.display.children("p").each(function(){
+        _this.display.children("p").each(function() {
             _this.edit.append(dom.pedit.format($(this).attr("seq"), $(this).attr("titid"), $(this).text()));
         });
     }
@@ -326,8 +348,7 @@ Title.prototype = {
 
 };
 
-var title = new Title("content");
-
+var title = new Title("title-wrapper");
 </script>
 
 </html>
