@@ -53,7 +53,7 @@
     background: white;
 }
 
-.tagWrapper li {
+.tag-new li {
     position: relative;
     display: inline-block;
     padding: 6px 8px;
@@ -73,7 +73,7 @@
     -webkit-backface-visibility: hidden;
 }
 
-.tagWrapper .in {
+.tag-new .in {
     background-color: #d7ebf8;
     border: 1px solid #448aff;
     text-shadow: 0 0 1px rgba(255, 255, 255, .375);
@@ -83,7 +83,7 @@
     cursor: pointer;
 }
 
-#tagView li {
+#tag-view li {
     display: block;
     float: left;
     max-width: 100px;
@@ -106,4 +106,31 @@
     color: #999;
     text-align: right;
     cursor: pointer
+}
+/****************************************************/
+.tag-wrapper .disp {
+    display:inline-block;
+    height:23px;
+}
+.tag-wrapper .mid {
+    vertical-align:middle;
+}
+.tag-wrapper .top {
+    vertical-align:top;
+}
+.tag-wrapper .cursor {
+    cursor: pointer;
+}
+.tag-wrapper .view {
+    width:93%;
+     min-height:23px; 
+     overflow:hidden;
+}
+.tag-wrapper .more {
+    width:30px; 
+    float:right;
+}
+
+.tag-new {
+    display:none; width:100%; border:1px solid #ddd; padding:10px;
 }
