@@ -7,7 +7,7 @@ String.prototype.format = function() {
 }
 
 /////////////////////////////////////////////////////////////////////
-function Title(father) {
+function Title(father, section, simplemde) {
     this.doc = {
         content     : "content",
         edit        : "editContent",
@@ -19,7 +19,7 @@ function Title(father) {
         btnsort     : "sort",
         btnsure     : "sure",
         pdefault    : "点击添加章节标题",
-    }
+    };
 
     this.dom = {
         content     : '<div id="content" class="content"></div>',
@@ -34,6 +34,9 @@ function Title(father) {
     };
     // title-wrapper
     this.father = $("#" + father);
+    this.section = $("#" + section);
+    this.article = new Object();
+    this.simplemde = simplemde;
     this.init();
 }
 
@@ -139,7 +142,7 @@ Title.prototype = {
         });
 
         _this.display.on("click", "p", function() {
-            //displaycallback($this);
+            _this.pOnClick($(this));
         });
 
         _this.btnedit.click(function() {
@@ -183,6 +186,24 @@ Title.prototype = {
         });
     },
 
+    pOnClick: function(o) {
+        var curSecId = this.section.attr("secid");
+        // 把当前状态保存
+        if(curSecId) {
+            this.article[curSecId] = this.simplemde.value();
+        } 
+        // 将被点击标题对应的内容拷贝到SECTION
+        var newSecId = o.attr("titid");
+        this.section.attr("secid", newSecId);
+
+        var content = this.article[newSecId];
+        if(content) {
+            this.simplemde.value(this.article[newSecId]);
+        } else {
+            this.simplemde.value("");
+        }
+    },
+
     editClick: function() {
         this.displayEdit();
         this.displayEnsure();
@@ -222,11 +243,11 @@ Title.prototype = {
     reomveRedundancy: function() {
         var _this = this;
         _this.edit.children("p").each(function() {
-            if ($(this).text() == this.doc.pdefault) {
+            if ($(this).text() == _this.doc.pdefault) {
                 var seq = $(this).attr("seq");
                 _this.display.children("p").each(function() {
                     if (seq == $(this).attr("seq")) {
-                        if ($(this).text() == this.doc.pdefault) {
+                        if ($(this).text() == _this.doc.pdefault) {
                             $(this).remove();
                         } else {
                             console.log("标题内容不一致");
@@ -256,7 +277,7 @@ Title.prototype = {
         var _this = this;
         _this.edit.empty();
         _this.display.children("p").each(function() {
-            _this.edit.append(this.dom.pedit.format($(this).attr("seq"), $(this).attr("titid"), $(this).text()));
+            _this.edit.append(_this.dom.pedit.format($(this).attr("seq"), $(this).attr("titid"), $(this).text()));
         });
     }
 };
